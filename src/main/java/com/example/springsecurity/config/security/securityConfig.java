@@ -3,6 +3,7 @@ package com.example.springsecurity.config.security;
 import com.example.springsecurity.config.security.filter.CorsFilter;
 import com.example.springsecurity.config.security.filter.JwtAuthenticationTokenFilter;
 import com.example.springsecurity.config.security.handle.AuthenticationEntryPointImpl;
+import com.example.springsecurity.config.security.handle.LogoutSuccessHandlerImpl;
 import com.example.springsecurity.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -38,6 +39,11 @@ public class securityConfig {
 
 
     /**
+     * 退出处理类
+     */
+    @Autowired
+    private LogoutSuccessHandlerImpl logoutSuccessHandler;
+    /**
      * 跨域过滤器
      */
     @Autowired
@@ -72,6 +78,8 @@ public class securityConfig {
                 .authorizeHttpRequests()
                 // 对于登录login  允许匿名访问
                 .requestMatchers("/user/login").permitAll()
+                .requestMatchers( "/profile/**").permitAll()
+                .requestMatchers( "/goods/getIndexData","/goods/findGoodsById").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated()
                 //成功的链接,也就是后续访问的链接放在这个里,我这里是成功页需要USER权限才能访问
@@ -99,6 +107,7 @@ public class securityConfig {
 //                .usernameParameter("username")
 //                .passwordParameter("password");
 
+        http.logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler);
         // 添加JWT filter
         http.addFilterBefore(authenticationTokenFilter, LogoutFilter.class);
         //添加corsFilter

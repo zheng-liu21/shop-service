@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springsecurity.mapper.IndexImageMapper">
+    <resultMap id="result" type="com.example.springsecurity.entity.indexImage">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="img" jdbcType="VARCHAR" property="img" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+        <result column="seq" jdbcType="INTEGER" property="seq" />
+        <result column="create_time" jdbcType="DATE" property="create_time" />
+        <result column="update_time" jdbcType="DATE" property="update_time" />
+    </resultMap>
+
+    <select id="findAllImage" resultType="com.example.springsecurity.entity.indexImage">
+        select  * from index_image
+    </select>
+
+
+</mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springsecurity.mapper.OrderMapper">
+    <resultMap id="result" type="com.example.springsecurity.entity.order">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="user" jdbcType="INTEGER" property="user" />
+        <result column="order_no" jdbcType="VARCHAR" property="order_no" />
+        <result column="amount" jdbcType="DOUBLE" property="amount" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="express_type" jdbcType="VARCHAR" property="express_type" />
+        <result column="express_no" jdbcType="VARCHAR" property="express_no" />
+        <result column="pay_time" jdbcType="DATE" property="pay_time" />
+        <result column="pay_type" jdbcType="VARCHAR" property="pay_type" />
+        <result column="trade_no" jdbcType="VARCHAR" property="trade_no" />
+        <result column="create_time" jdbcType="DATE" property="create_time" />
+        <result column="update_time" jdbcType="DATE" property="update_time" />
+    </resultMap>
+
+    <select id="findOrderByNo" resultType="com.example.springsecurity.entity.order">
+        select  * from order_table
+        <where>
+            order_no=#{order_no}
+        </where>
+    </select>
+
+    <select id="findOrderById" resultType="com.example.springsecurity.entity.order">
+        select  * from order_table  where id=#{id};
+    </select>
+
+    <insert id="insertOrder" parameterType="com.example.springsecurity.entity.order" useGeneratedKeys="true" keyProperty="id">
+        insert into order_table
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="user != null">user,</if>
+            <if test="order_no != null">order_no,</if>
+            <if test="amount != null">amount,</if>
+            <if test="address != null">address,</if>
+            <if test="status != null">status,</if>
+            <if test="express_type != null">express_type,</if>
+            <if test="express_no != null">express_no,</if>
+            <if test="create_time != null">create_time,</if>
+            <if test="update_time != null">update_time,</if>
+            <if test="pay_time != null">pay_time,</if>
+            <if test="pay_type != null">pay_type,</if>
+            <if test="trade_no != null">trade_no,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="user != null">#{user},</if>
+            <if test="order_no != null">#{order_no},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="address != null">#{address},</if>
+            <if test="status != null">#{status},</if>
+            <if test="express_type != null">#{express_type},</if>
+            <if test="express_no != null">#{express_no},</if>
+            <if test="create_time != null">#{create_time},</if>
+            <if test="update_time != null">#{update_time},</if>
+            <if test="pay_time != null">#{pay_time},</if>
+            <if test="pay_type != null">#{pay_type},</if>
+            <if test="trade_no != null">#{trade_no},</if>
+        </trim>
+    </insert>
+
+</mapper>

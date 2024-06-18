@@ -145,12 +145,12 @@ public class LoginUser implements UserDetails {
     @JSONField(serialize = false)
     @Override
     public String getPassword() {
-        return user.getPasswore();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getName();
+        return user.getUsername();
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springsecurity.mapper.AddressMapper">
+    <resultMap id="result" type="com.example.springsecurity.entity.address">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="user_id" jdbcType="INTEGER" property="user_id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="province" jdbcType="VARCHAR" property="province" />
+        <result column="city" jdbcType="VARCHAR" property="city" />
+        <result column="county" jdbcType="VARCHAR" property="county" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="is_default" jdbcType="INTEGER" property="is_default" />
+    </resultMap>
+
+    <select id="findCAddressByUserID" resultType="com.example.springsecurity.entity.address">
+        select  * from address
+        <where>
+            user_id=#{user_id}
+        </where>
+    </select>
+
+<!--    <select id="findGoodsById" resultType="com.example.springsecurity.entity.address">-->
+<!--        select  * from goods  where id=#{id};-->
+<!--    </select>-->
+
+
+    <insert id="insertAddress" parameterType="com.example.springsecurity.entity.address" useGeneratedKeys="true" keyProperty="id">
+        insert into address
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="user_id != null">user_id,</if>
+            <if test="name != null">name,</if>
+            <if test="province != null">province,</if>
+            <if test="city != null">city,</if>
+            <if test="county != null">county,</if>
+            <if test="address != null">address,</if>
+            <if test="phone != null">phone,</if>
+            <if test="is_default != null">is_default,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="user_id != null">#{user_id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="province != null">#{province},</if>
+            <if test="city != null">#{city},</if>
+            <if test="county != null">#{county},</if>
+            <if test="address != null">#{address},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="is_default != null">#{is_default},</if>
+        </trim>
+    </insert>
+
+    <update id="updateAddress" parameterType="com.example.springsecurity.entity.address">
+        update address
+        <set >
+            <if test="name != null">
+                name=#{name},
+            </if>
+            <if test="province != null">
+                province=#{province},
+            </if>
+            <if test="city != null">
+                city=#{city},
+            </if>
+            <if test="county != null">
+                county=#{county},
+            </if>
+            <if test="address != null">
+                address =#{address},
+            </if>
+            <if test="phone != null">
+                phone =#{phone},
+            </if>
+            <if test="is_default != null">
+                is_default=#{is_default},
+            </if>
+        </set>
+        where id=#{id};
+    </update>
+
+<!--    <delete id="deleteGoodsByid" parameterType="com.example.springsecurity.entity.address">-->
+<!--        delete from goods where id=#{id};-->
+<!--    </delete>-->
+
+</mapper>

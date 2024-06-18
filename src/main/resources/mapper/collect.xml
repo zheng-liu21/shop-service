@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springsecurity.mapper.CollectMapper">
+    <resultMap id="result" type="com.example.springsecurity.entity.collect">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="user" jdbcType="INTEGER" property="user" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="goods" jdbcType="INTEGER" property="goods" />
+
+    </resultMap>
+
+<!--    <select id="findCartByUserID" resultType="com.example.springsecurity.entity.collect">-->
+<!--        select  g.id,g.type,t.name,g.title,g.desc,g.price,g.stock,g.cover,g.pics,g.details,g.sales,g.is_on,g.is_recommed,g.create_time,g.update_time-->
+<!--        from cart c,goods g,user u,goods_type t-->
+<!--        <where>-->
+<!--            c.user=u.id and c.goods=g.id and c.user=#{userId} and g.type=t.id-->
+<!--        </where>-->
+<!--    </select>-->
+
+<!--    <select id="findGoodsById" resultType="com.example.springsecurity.entity.collect">-->
+<!--        select  * from goods  where id=#{id};-->
+<!--    </select>-->
+
+
+    <insert id="insertCollect" parameterType="com.example.springsecurity.entity.collect" useGeneratedKeys="true" keyProperty="id">
+        insert into collect
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="user != null">user,</if>
+            <if test="goods != null">goods,</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="user != null">#{user},</if>
+            <if test="goods != null">#{goods},</if>
+
+        </trim>
+    </insert>
+
+<!--    <update id="updateGoods" parameterType="com.example.springsecurity.entity.collect">-->
+<!--        update goods-->
+<!--        <set >-->
+<!--            <if test="type != null">-->
+<!--                type=#{type},-->
+<!--            </if>-->
+<!--            <if test="title != null">-->
+<!--                title=#{title},-->
+<!--            </if>-->
+<!--            <if test="desc != null">-->
+<!--                desc=#{desc},-->
+<!--            </if>-->
+<!--            <if test="price != null">-->
+<!--                price=#{price},-->
+<!--            </if>-->
+<!--            <if test="stock != null">-->
+<!--                stock =#{stock},-->
+<!--            </if>-->
+<!--            <if test="cover != null">-->
+<!--                cover =#{cover},-->
+<!--            </if>-->
+<!--            <if test="pics != null">-->
+<!--                pics=#{pics},-->
+<!--            </if>-->
+<!--            <if test="details != null">-->
+<!--                details =#{details},-->
+<!--            </if>-->
+<!--            <if test="sales != null">-->
+<!--                sales =#{sales},-->
+<!--            </if>-->
+<!--            <if test="create_time != null">-->
+<!--                create_time =#{create_time},-->
+<!--            </if>-->
+<!--            <if test="is_active != null">-->
+<!--                update_time =#{update_time},-->
+<!--            </if>-->
+<!--        </set>-->
+<!--        where id=#{id};-->
+<!--    </update>-->
+
+    <delete id="deleteCollect" parameterType="com.example.springsecurity.entity.collect">
+        delete from collect where user=#{userId} and goods=#{goodsId};
+    </delete>
+
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springsecurity.mapper.goodsTypeMapper">
+    <resultMap id="result" type="com.example.springsecurity.entity.goodsType">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="image" jdbcType="VARCHAR" property="image" />
+        <result column="statusbo" jdbcType="VARCHAR" property="statusbo" />
+    </resultMap>
+
+    <select id="findAllType" resultType="com.example.springsecurity.entity.goodsType">
+        select  * from goods_type
+        <where>
+            statusbo='1'
+        </where>
+    </select>
+
+</mapper>

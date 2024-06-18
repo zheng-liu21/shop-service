@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springsecurity.mapper.GoodsMapper">
+    <resultMap id="result" type="com.example.springsecurity.entity.goods">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="type" jdbcType="INTEGER" property="type" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="desc" jdbcType="VARCHAR" property="desc" />
+        <result column="price" jdbcType="VARCHAR" property="price" />
+        <result column="stock" jdbcType="VARCHAR" property="stock" />
+        <result column="cover" jdbcType="VARCHAR" property="cover" />
+        <result column="pics" jdbcType="VARCHAR" property="pics" />
+        <result column="details" jdbcType="VARCHAR" property="details" />
+        <result column="sales" jdbcType="VARCHAR" property="sales" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="is_on" jdbcType="INTEGER" property="is_on" />
+        <result column="is_recommed" jdbcType="INTEGER" property="is_recommed" />
+        <result column="create_time" jdbcType="DATE" property="createTime" />
+        <result column="update_time" jdbcType="DATE" property="updateTime" />
+        <result column="number" jdbcType="INTEGER" property="number" />
+        <result column="is_checked" jdbcType="INTEGER" property="is_checked" />
+    </resultMap>
+
+
+    <select id="findAllGoods" resultType="com.example.springsecurity.entity.goods">
+        select  *
+        from goods
+    </select>
+
+    <select id="findIndexGoods" resultType="com.example.springsecurity.entity.goods">
+        select  *
+        from goods
+        <where>
+            is_recommed='1'
+        </where>
+    </select>
+
+    <select id="findCartByUserID" resultType="com.example.springsecurity.entity.goods">
+        select  g.id,g.type,t.name,g.title,g.desc,g.price,g.stock,g.cover,g.pics,g.details,g.sales,g.is_on,g.is_recommed,g.create_time,g.update_time,c.number,c.is_checked
+        from cart c,goods g,user u,goods_type t
+        <where>
+
+            c.user=u.id and c.goods=g.id and c.user=#{userId} and g.type=t.id
+        </where>
+    </select>
+
+    <select id="findCartChecked" resultType="com.example.springsecurity.entity.goods">
+        select  g.id,g.type,t.name,g.title,g.desc,g.price,g.stock,g.cover,g.pics,g.details,g.sales,g.is_on,g.is_recommed,g.create_time,g.update_time,c.number,c.is_checked
+        from cart c,goods g,user u,goods_type t
+        <where>
+            c.user=u.id and c.goods=g.id and c.user=#{userId} and g.type=t.id and is_checked = 1
+        </where>
+    </select>
+
+    <select id="findCollectByUserID" resultType="com.example.springsecurity.entity.goods">
+        select  g.id,g.type,t.name,g.title,g.desc,g.price,g.stock,g.cover,g.pics,g.details,g.sales,g.is_on,g.is_recommed,g.create_time,g.update_time
+        from collect c,goods g,user u,goods_type t
+        <where>
+            c.user=u.id and c.goods=g.id and c.user=#{userId} and g.type=t.id
+        </where>
+    </select>
+
+    <select id="findGoodsById" resultType="com.example.springsecurity.entity.goods">
+        select  * from goods  where id=#{id};
+    </select>
+
+    <select id="findGoodsByGroupId" resultType="com.example.springsecurity.entity.goods">
+        select  g.id,g.type,t.name,g.title,g.desc,g.price,g.stock,g.cover,g.pics,g.details,g.sales,g.is_on,g.is_recommed,g.create_time,g.update_time
+        from goods g,goods_type t  where g.type=t.id and t.id=#{id};
+    </select>
+
+
+    <insert id="insertGoods" parameterType="com.example.springsecurity.entity.goods" useGeneratedKeys="true" keyProperty="id">
+        insert into goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">type,</if>
+            <if test="title != null">title,</if>
+            <if test="desc != null">desc,</if>
+            <if test="price != null">price,</if>
+            <if test="stock != null">stock,</if>
+            <if test="cover != null">cover,</if>
+            <if test="pics != null">pics,</if>
+            <if test="details != null">details,</if>
+            <if test="sales != null">sales,</if>
+            <if test="create_time != null">create_time,</if>
+            <if test="update_time != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="title != null">#{title},</if>
+            <if test="desc != null">#{desc},</if>
+            <if test="price != null">#{price},</if>
+            <if test="stock != null">#{stock},</if>
+            <if test="cover != null">#{cover},</if>
+            <if test="pics != null">#{pics},</if>
+            <if test="details != null">#{details},</if>
+            <if test="sales != null">#{sales},</if>
+            <if test="create_time != null">#{create_time},</if>
+            <if test="update_time != null">#{update_time},</if>
+        </trim>
+    </insert>
+
+    <update id="updateGoods" parameterType="com.example.springsecurity.entity.goods">
+        update goods
+        <set >
+            <if test="type != null">
+                type=#{type},
+            </if>
+            <if test="title != null">
+                title=#{title},
+            </if>
+            <if test="desc != null">
+                desc=#{desc},
+            </if>
+            <if test="price != null">
+                price=#{price},
+            </if>
+            <if test="stock != null">
+                stock =#{stock},
+            </if>
+            <if test="cover != null">
+                cover =#{cover},
+            </if>
+            <if test="pics != null">
+                pics=#{pics},
+            </if>
+            <if test="details != null">
+                details =#{details},
+            </if>
+            <if test="sales != null">
+                sales =#{sales},
+            </if>
+            <if test="create_time != null">
+                create_time =#{create_time},
+            </if>
+            <if test="is_active != null">
+                update_time =#{update_time},
+            </if>
+        </set>
+        where id=#{id};
+    </update>
+
+    <delete id="deleteGoodsByid" parameterType="com.example.springsecurity.entity.goods">
+        delete from goods where id=#{id};
+    </delete>
+
+</mapper>

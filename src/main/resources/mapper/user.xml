@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springsecurity.mapper.UserMapper">
+    <resultMap id="result" type="com.example.springsecurity.entity.user">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="last_name" jdbcType="VARCHAR" property="last_name" />
+        <result column="email" jdbcType="VARCHAR" property="eamil" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+        <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+        <result column="is_active" jdbcType="INTEGER" property="is_active" />
+        <result column="create_time" jdbcType="DATE" property="create_time" />
+        <result column="update_time" jdbcType="DATE" property="update_time" />
+        <result column="is_bind" jdbcType="INTEGER" property="is_bind" />
+    </resultMap>
+
+    <select id="findAlluser" resultType="com.example.springsecurity.entity.user">
+        select  * from user
+        <where>
+            <if test="username!=null and username!=''">
+                and username  like concat('%', #{username}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="findUserById" resultType="com.example.springsecurity.entity.user">
+        select  * from user  where id=#{id};
+    </select>
+
+    <select id="findUserByName" resultType="com.example.springsecurity.entity.user">
+        select * from user where username=#{username};
+    </select>
+
+    <insert id="insertUser" parameterType="com.example.springsecurity.entity.user" useGeneratedKeys="true" keyProperty="id">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">username,</if>
+            <if test="last_name != null">last_name,</if>
+            <if test="email != null">email,</if>
+            <if test="password != null">password,</if>
+            <if test="mobile != null">mobile,</if>
+            <if test="avatar != null">avatar,</if>
+            <if test="is_active != null">is_active,</if>
+            <if test="create_time != null">create_time,</if>
+            <if test="update_time != null">update_time,</if>
+            <if test="is_bind != null">is_bind,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null">#{username},</if>
+            <if test="last_name != null">#{last_name},</if>
+            <if test="email != null">#{email},</if>
+            <if test="password != null">#{password},</if>
+            <if test="mobile != null">#{mobile},</if>
+            <if test="avatar != null">#{avatar},</if>
+            <if test="is_active != null">#{is_active},</if>
+            <if test="create_time != null">#{create_time},</if>
+            <if test="update_time != null">#{update_time},</if>
+            <if test="is_bind != null">#{is_bind},</if>
+        </trim>
+    </insert>
+
+    <update id="updateUser" parameterType="com.example.springsecurity.entity.user">
+        update user
+        <set >
+            <if test="username != null">
+                username=#{username},
+            </if>
+            <if test="last_name != null">
+                last_name=#{last_name},
+            </if>
+            <if test="email != null">
+                email=#{email},
+            </if>
+            <if test="password != null">
+                password=#{password},
+            </if>
+            <if test="mobile != null">
+                mobile=#{mobile},
+            </if>
+            <if test="avatar != null">
+                avatar =#{avatar},
+            </if>
+            <if test="is_active != null">
+                is_active =#{is_active},
+            </if>
+            <if test="create_time != null">
+                create_time =#{create_time},
+            </if>
+            <if test="update_time != null">
+                update_time =#{update_time},
+            </if>
+            <if test="is_bind != null">
+                is_bind =#{is_bind},
+            </if>
+        </set>
+        where id=#{id};
+    </update>
+
+    <delete id="deleteUserByid" parameterType="com.example.springsecurity.entity.user">
+        delete from user where id=#{id};
+    </delete>
+
+</mapper>
